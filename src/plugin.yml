@@ -1,0 +1,6 @@
+name: FloodgateCP
+author: MSHuman
+description: Adds Bedrock Edition forms from Floodgate to CommandPanels.
+version: 1.0
+api-version: 1.14
+main: com.mshuman.floodgatecp
