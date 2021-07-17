@@ -4,5 +4,15 @@ description: Adds Bedrock Edition forms from Floodgate to CommandPanels.
 version: 1.0
 api-version: 1.14
 main: com.mshuman.floodgatecp.FloodgateCP
+permissions:
+  floodgatecp.reload:
+    description: Permission to reload FloodgateCP with /fgcp reload.
+commands:
+  floodgatecp:
+    description: Base command for FloodgateCP.
+    aliases:
+      - fgcp
 depend:
   - CommandPanels
+  - floodgate
+  - Geyser-Spigot

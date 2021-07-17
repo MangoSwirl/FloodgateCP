@@ -10,7 +10,7 @@ public class Events implements Listener {
     public void onPanelOpen(PanelOpenedEvent event) {
         if (!FloodgateApi.getInstance().isFloodgatePlayer(event.getPlayer().getUniqueId())) return;
 
-        event.getPlayer().sendMessage("§cThis panel is not supported on Bedrock Edition.");
+        event.getPlayer().sendMessage(FloodgateCP.getInstance().getConfig().getString("lang.prefix") + FloodgateCP.getInstance().getConfig().getString("lang.panel-not-available"));
         event.setCancelled(true);
     }
 }
