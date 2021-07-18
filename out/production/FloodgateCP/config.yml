@@ -1,0 +1,14 @@
+lang:
+  panel-not-available: '§cThis panel is not supported on Bedrock Edition.'
+  no-permission: '§cYou are not allowed to do this.'
+  prefix: '§2[§bFGCP§2] §r'
+  config-reloaded: 'Reloaded the config.'
+panels:
+  example:
+    type: simple
+    title: Example Panel
+    content: This panel shows up on bedrock edition.
+    buttons:
+      '1':
+        content: 'Click me to say hi!'
+        commands: 'say hi'
