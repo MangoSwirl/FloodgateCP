@@ -18,11 +18,11 @@ public class Util {
 
         for (String i : getConfig().getStringList("panels." + panel + ".buttons." + buttonHandle + ".commands")) {
             if (i.startsWith("console= ")) {
-                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), i.replaceFirst("console= ", ""));
+                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), i.replaceFirst("console= ", "").replaceAll("%cp-player-name%", player.getName()));
             } else if (i.startsWith("msg= ")) {
-                player.sendMessage(i.replaceFirst("msg= ", ""));
+                player.sendMessage(i.replaceFirst("msg= ", "").replaceAll("%cp-player-name%", player.getName()));
             } else {
-                player.performCommand(i);
+                player.performCommand(i.replaceAll("%cp-player-name%", player.getName()));
             }
         }
 
