@@ -19,11 +19,11 @@ public class Events implements Listener {
             FloodgatePlayer fgPlayer = FloodgateApi.getInstance().getPlayer(event.getPlayer().getUniqueId());
             ConfigurationSection fgPanel = Util.getConfig().getConfigurationSection("panels." + event.getPanel().getName());
             SimpleForm.Builder form = SimpleForm.builder();
-            form = form.title(fgPanel.getString("title"));
-            form = form.content(fgPanel.getString("content"));
+            form = form.title(fgPanel.getString("title").replaceAll("%cp-player-name%", event.getPlayer().getName()));
+            form = form.content(fgPanel.getString("content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
 
             for (String i : fgPanel.getConfigurationSection("buttons").getKeys(false)) {
-                form = form.button(fgPanel.getString("buttons." + i + ".content"));
+                form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
             }
             form = form.responseHandler((SimpleForm returnedForm, String rawResponse) -> {
                 SimpleFormResponse response = returnedForm.parseResponse(rawResponse);
