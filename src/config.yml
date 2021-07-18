@@ -13,3 +13,8 @@ panels:
         content: 'Click me to say hi!'
         commands:
           - 'say hi'
+      '2':
+        content: '/kill yourself'
+        commands:
+          - 'console= kill %cp-player-name%'
+          - 'msg= §bYou killed yourself.'
