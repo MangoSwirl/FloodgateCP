@@ -11,4 +11,5 @@ panels:
     buttons:
       '1':
         content: 'Click me to say hi!'
-        commands: 'say hi'
+        commands:
+          - 'say hi'
