@@ -7,5 +7,6 @@ FloodgateCP is an indev [Spigot](https://www.spigotmc.org/) plugin that adds Bed
 - You can't move the items around, because they aren't items.
 ## Planned features:
 - `onopen` and `onclose` support for each panel.
+- Maybe other types of bedrock panels, like `FORM` or `MODAL`.
 - _Possibly_ an ingame editor.
 - _Possibly_ an automatic panel converter.
