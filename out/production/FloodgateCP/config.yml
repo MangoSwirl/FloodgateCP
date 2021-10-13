@@ -1,23 +1,42 @@
+# Use to change phrasing or language of messages that will be sent by the plugin. Support for color codes with §.
 lang:
   panel-not-available: '§cThis panel is not supported on Bedrock Edition.'
   no-permission: '§cYou are not allowed to do this.'
   prefix: '§2[§bFGCP§2] §r'
   config-reloaded: 'Reloaded the config.'
+
+# List of panels that show up on bedrock edition. You can use any PlaceholderAPI placeholders here, or use %cp-player-name% for the player's username.
 panels:
+  # Panel title. This is where you put the name of the commandpanel that this will override on bedrock. This will not be shown to players.
   example:
+    # Panel type. Currently, the only type available is simple.
     type: simple
+    # User-visible title. Support for color codes with §.
     title: Example Panel
+    # User-visible subtitle/body. Can be made multiline by adding '\n'. Support for color codes with §.
     content: This panel shows up on bedrock edition.
+    # A list of buttons that will appear on the panel.
     buttons:
+      # Button title. It is recommended to use integers with increasing value starting at 1, but you can use anything as long as no two button titles are the same per panel.
+      # The buttons will be arranged on the panel by the order they are listed here, not by the number as their title.
       '1':
+        # The visible text on a button. Can be made multiline by adding '\n', but it is recommended to only use two lines at most. Support for color codes with §.
         content: 'Click me to say hi!'
+        # A list of commands that will be executed in this order when the button is pressed. Commands with no prefix will be executed as the player.
+        # Begin a command with 'console= ' for it to be executed as the console, or 'msg= ' for it to be a message sent to the player, not a command. 'msg= ' supports color codes with §.
         commands:
           - 'say hi'
+        # Icon that will be shown to the left of a button. Optional.
         icon:
+          # Type of icon. Use PATH for a texture in the Bedrock Edition game files, and URL for a png online.
           type: PATH
-          texture: 'items/sign.png'
+          # Path to the texture in the game files, or a url to a png, depending on the type above.
+          texture: 'textures/items/sign.png'
       '2':
         content: '/kill yourself'
         commands:
           - 'console= kill %cp-player-name%'
           - 'msg= §bYou killed yourself.'
+        icon:
+          type: URL
+          texture: 'https://media-minecraftforum.cursecdn.com/attachments/170/896/635865881340253467.png'
