@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.geysermc.cumulus.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
+import org.geysermc.cumulus.util.FormImage;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
@@ -23,7 +24,13 @@ public class Events implements Listener {
             form = form.content(fgPanel.getString("content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
 
             for (String i : fgPanel.getConfigurationSection("buttons").getKeys(false)) {
-                form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
+                if (!fgPanel.contains("buttons." + i + ".icon")) {
+                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
+                } else if (fgPanel.getString("buttons." + i + ".icon.type").equalsIgnoreCase("PATH")) {
+                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), FormImage.Type.PATH, fgPanel.getString("buttons." + i + ".icon.texture"));
+                } else if (fgPanel.getString("buttons." + i + ".icon.type").equalsIgnoreCase("URL")) {
+                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), FormImage.Type.URL, fgPanel.getString("buttons." + i + ".icon.texture"));
+                }
             }
             form = form.responseHandler((SimpleForm returnedForm, String rawResponse) -> {
                 SimpleFormResponse response = returnedForm.parseResponse(rawResponse);

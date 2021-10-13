@@ -13,6 +13,9 @@ panels:
         content: 'Click me to say hi!'
         commands:
           - 'say hi'
+        icon:
+          type: PATH
+          texture: 'items/sign.png'
       '2':
         content: '/kill yourself'
         commands:
