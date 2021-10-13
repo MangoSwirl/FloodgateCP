@@ -20,16 +20,16 @@ public class Events implements Listener {
             FloodgatePlayer fgPlayer = FloodgateApi.getInstance().getPlayer(event.getPlayer().getUniqueId());
             ConfigurationSection fgPanel = Util.getConfig().getConfigurationSection("panels." + event.getPanel().getName());
             SimpleForm.Builder form = SimpleForm.builder();
-            form = form.title(fgPanel.getString("title").replaceAll("%cp-player-name%", event.getPlayer().getName()));
-            form = form.content(fgPanel.getString("content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
+            form = form.title(Util.parsePapiPlaceholders(fgPanel.getString("title").replaceAll("%cp-player-name%", event.getPlayer().getName()), event.getPlayer()));
+            form = form.content(Util.parsePapiPlaceholders(fgPanel.getString("content").replaceAll("%cp-player-name%", event.getPlayer().getName()), event.getPlayer()));
 
             for (String i : fgPanel.getConfigurationSection("buttons").getKeys(false)) {
                 if (!fgPanel.contains("buttons." + i + ".icon")) {
-                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()));
+                    form = form.button(Util.parsePapiPlaceholders(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), event.getPlayer()));
                 } else if (fgPanel.getString("buttons." + i + ".icon.type").equalsIgnoreCase("PATH")) {
-                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), FormImage.Type.PATH, fgPanel.getString("buttons." + i + ".icon.texture"));
+                    form = form.button(Util.parsePapiPlaceholders(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), event.getPlayer()), FormImage.Type.PATH, fgPanel.getString("buttons." + i + ".icon.texture"));
                 } else if (fgPanel.getString("buttons." + i + ".icon.type").equalsIgnoreCase("URL")) {
-                    form = form.button(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), FormImage.Type.URL, fgPanel.getString("buttons." + i + ".icon.texture"));
+                    form = form.button(Util.parsePapiPlaceholders(fgPanel.getString("buttons." + i + ".content").replaceAll("%cp-player-name%", event.getPlayer().getName()), event.getPlayer()), FormImage.Type.URL, fgPanel.getString("buttons." + i + ".icon.texture"));
                 }
             }
             form = form.responseHandler((SimpleForm returnedForm, String rawResponse) -> {

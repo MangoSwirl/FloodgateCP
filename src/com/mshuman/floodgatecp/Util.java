@@ -1,5 +1,7 @@
 package com.mshuman.floodgatecp;
 
+import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.SimpleForm;
@@ -18,13 +20,20 @@ public class Util {
 
         for (String i : getConfig().getStringList("panels." + panel + ".buttons." + buttonHandle + ".commands")) {
             if (i.startsWith("console= ")) {
-                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), i.replaceFirst("console= ", "").replaceAll("%cp-player-name%", player.getName()));
+                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), Util.parsePapiPlaceholders(i.replaceFirst("console= ", "").replaceAll("%cp-player-name%", player.getName()), player));
             } else if (i.startsWith("msg= ")) {
-                player.sendMessage(i.replaceFirst("msg= ", "").replaceAll("%cp-player-name%", player.getName()));
+                player.sendMessage(Util.parsePapiPlaceholders(i.replaceFirst("msg= ", "").replaceAll("%cp-player-name%", player.getName()), player));
             } else {
-                player.performCommand(i.replaceAll("%cp-player-name%", player.getName()));
+                player.performCommand(Util.parsePapiPlaceholders(i.replaceAll("%cp-player-name%", player.getName()), player));
             }
         }
 
+    }
+    // Parses PlaceholderAPI placeholders, if available.
+    public static String parsePapiPlaceholders(String initialString, Player player) {
+        // If the PlaceholderAPI isn't installed, return the original string.
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return initialString;
+        // Return the parsed string
+        return PlaceholderAPI.setPlaceholders(player, initialString);
     }
 }
