@@ -16,3 +16,5 @@ depend:
   - CommandPanels
   - floodgate
   - Geyser-Spigot
+softdepend:
+  - PlaceholderAPI
