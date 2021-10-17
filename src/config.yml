@@ -13,14 +13,14 @@ panels:
     type: simple
     # User-visible title. Support for color codes with §.
     title: Example Panel
-    # User-visible subtitle/body. Can be made multiline by adding '\n'. Support for color codes with §.
+    # User-visible subtitle/body. Can be made multiline by adding '%n'. Support for color codes with §.
     content: This panel shows up on bedrock edition.
     # A list of buttons that will appear on the panel.
     buttons:
       # Button title. It is recommended to use integers with increasing value starting at 1, but you can use anything as long as no two button titles are the same per panel.
       # The buttons will be arranged on the panel by the order they are listed here, not by the number as their title.
       '1':
-        # The visible text on a button. Can be made multiline by adding '\n', but it is recommended to only use two lines at most. Support for color codes with §.
+        # The visible text on a button. Can be made multiline by adding '%n', but it is recommended to only use two lines at most. Support for color codes with §.
         content: 'Click me to say hi!'
         # A list of commands that will be executed in this order when the button is pressed. Commands with no prefix will be executed as the player.
         # Begin a command with 'console= ' for it to be executed as the console, or 'msg= ' for it to be a message sent to the player, not a command. 'msg= ' supports color codes with §.

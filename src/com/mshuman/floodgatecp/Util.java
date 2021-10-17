@@ -32,8 +32,8 @@ public class Util {
     // Parses PlaceholderAPI placeholders, if available.
     public static String parsePapiPlaceholders(String initialString, Player player) {
         // If the PlaceholderAPI isn't installed, return the original string.
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return initialString;
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return initialString.replace("%n", "\n");
         // Return the parsed string
-        return PlaceholderAPI.setPlaceholders(player, initialString);
+        return PlaceholderAPI.setPlaceholders(player, initialString).replace("%n", "\n");
     }
 }
