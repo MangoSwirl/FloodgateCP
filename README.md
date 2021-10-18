@@ -7,6 +7,7 @@ FloodgateCP is an indev [Spigot](https://www.spigotmc.org/) plugin that adds Bed
 - When a button is pressed, the panel will always close. You can get around this by reopening the panel in the commands.
 - The server can't close bedrock panels, only the player can.
 - You can't move the items around, because they aren't items.
+- While a panel is opened, the text/content on it cannot be dynamically changed.
 ## Planned features:
 - `onopen` and `onclose` support for each panel.
 - Maybe other types of bedrock panels, like `FORM` or `MODAL`.
