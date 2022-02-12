@@ -24,13 +24,7 @@ public class Util {
         String buttonHandle = getConfig().getConfigurationSection("panels." + panel + ".buttons").getKeys(false).toArray()[response.getClickedButtonId()].toString();
 
         for (String i : getConfig().getStringList("panels." + panel + ".buttons." + buttonHandle + ".commands")) {
-            if (i.startsWith("console= ")) {
-                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), Util.parsePapiPlaceholders(i.replaceFirst("console= ", "").replaceAll("%cp-player-name%", player.getName()), player));
-            } else if (i.startsWith("msg= ")) {
-                player.sendMessage(Util.parsePapiPlaceholders(i.replaceFirst("msg= ", "").replaceAll("%cp-player-name%", player.getName()), player));
-            } else {
-                player.performCommand(Util.parsePapiPlaceholders(i.replaceAll("%cp-player-name%", player.getName()), player));
-            }
+            executeCommand(i, player);
         }
 
     }
@@ -59,6 +53,7 @@ public class Util {
                 player.sendMessage(parsePlaceholders(cmdWithoutTag, player).replaceAll("%n", "\n"));
                 break;
             case "server":
+                // This should apparently tell BungeeCord to change the player's server.
                 ByteArrayDataOutput out = ByteStreams.newDataOutput();
                 out.writeUTF("Connect");
                 out.writeUTF(cmdWithoutTag);
