@@ -2,6 +2,7 @@ package com.mshuman.floodgatecp;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mshuman.floodgatecp.bungeecord.PluginMessage;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -53,13 +54,8 @@ public class Util {
                 player.sendMessage(parsePlaceholders(cmdWithoutTag, player).replaceAll("%n", "\n"));
                 break;
             case "server":
-                // This should apparently tell BungeeCord to change the player's server.
-                ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                out.writeUTF("Connect");
-                out.writeUTF(cmdWithoutTag);
-                Player p = Bukkit.getPlayerExact(player.getName());
-                assert p != null;
-                p.sendPluginMessage(FloodgateCP.getInstance(), "BungeeCord", out.toByteArray());
+                PluginMessage pluginMessage = new PluginMessage();
+                pluginMessage.connect(player, parsePlaceholders(cmdWithoutTag, player));
                 break;
         }
     }
