@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="FloodgateCP:jar">
-    <output-path>$PROJECT_DIR$/../testserver/plugins</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/FloodgateCP_jar</output-path>
     <root id="archive" name="FloodgateCP.jar">
       <element id="module-output" name="FloodgateCP" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../Dependencies/spigot-api-1.17.jar" path-in-jar="/" />
