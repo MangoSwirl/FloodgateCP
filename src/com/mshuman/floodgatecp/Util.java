@@ -1,11 +1,17 @@
 package com.mshuman.floodgatecp;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+import com.mshuman.floodgatecp.bungeecord.PluginMessage;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.geysermc.cumulus.SimpleForm;
 import org.geysermc.cumulus.response.SimpleFormResponse;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Util {
     public static String getLang(String key) {
@@ -19,21 +25,62 @@ public class Util {
         String buttonHandle = getConfig().getConfigurationSection("panels." + panel + ".buttons").getKeys(false).toArray()[response.getClickedButtonId()].toString();
 
         for (String i : getConfig().getStringList("panels." + panel + ".buttons." + buttonHandle + ".commands")) {
-            if (i.startsWith("console= ")) {
-                FloodgateCP.getInstance().getServer().dispatchCommand(FloodgateCP.getInstance().getServer().getConsoleSender(), Util.parsePapiPlaceholders(i.replaceFirst("console= ", "").replaceAll("%cp-player-name%", player.getName()), player));
-            } else if (i.startsWith("msg= ")) {
-                player.sendMessage(Util.parsePapiPlaceholders(i.replaceFirst("msg= ", "").replaceAll("%cp-player-name%", player.getName()), player));
-            } else {
-                player.performCommand(Util.parsePapiPlaceholders(i.replaceAll("%cp-player-name%", player.getName()), player));
-            }
+            executeCommand(i, player);
         }
 
     }
+
+
+
+    public static void executeCommand(String cmd, Player player) {
+        ArrayList<String> commandTags = new ArrayList<String>();
+        commandTags.add("console");
+        commandTags.add("msg");
+        commandTags.add("server");
+
+        if (!commandTags.contains(cmd.split("= ")[0])) {
+            Bukkit.dispatchCommand(player, parsePlaceholders(cmd, player));
+            return;
+        }
+
+        String tag = cmd.split("= ")[0];
+        String cmdWithoutTag = cmd.split("= ")[1];
+
+        switch (tag) {
+            case "console":
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), parsePlaceholders(cmdWithoutTag, player));
+                break;
+            case "msg":
+                player.sendMessage(parsePlaceholders(cmdWithoutTag, player).replaceAll("%n", "\n"));
+                break;
+            case "server":
+                PluginMessage pluginMessage = new PluginMessage();
+                pluginMessage.connect(player, parsePlaceholders(cmdWithoutTag, player));
+                break;
+        }
+    }
+
+    public static String parsePlaceholders(String initialString, Player player) {
+        String tempString = initialString;
+
+        // PlaceholderAPI
+        tempString = parsePapiPlaceholders(tempString, player);
+        // CommandPanels
+        tempString = tempString.replaceAll("%cp-player-name%", player.getName());
+        tempString = tempString.replaceAll("%cp-player-displayname%", player.getDisplayName());
+        tempString = tempString.replaceAll("%cp-player-x%", String.valueOf(player.getLocation().getBlockX()));
+        tempString = tempString.replaceAll("%cp-player-y%", String.valueOf(player.getLocation().getBlockY()));
+        tempString = tempString.replaceAll("%cp-player-z%", String.valueOf(player.getLocation().getBlockZ()));
+        tempString = tempString.replaceAll("%cp-player-world%", player.getWorld().getName());
+
+        return tempString;
+    }
+
     // Parses PlaceholderAPI placeholders, if available.
     public static String parsePapiPlaceholders(String initialString, Player player) {
         // If the PlaceholderAPI isn't installed, return the original string.
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return initialString.replace("%n", "\n");
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) return initialString;
         // Return the parsed string
-        return PlaceholderAPI.setPlaceholders(player, initialString).replace("%n", "\n");
+        return PlaceholderAPI.setPlaceholders(player, initialString);
     }
 }

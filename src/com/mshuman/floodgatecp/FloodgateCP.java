@@ -1,5 +1,6 @@
 package com.mshuman.floodgatecp;
 
+import com.mshuman.floodgatecp.bungeecord.PluginMessage;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FloodgateCP extends JavaPlugin {
@@ -8,10 +9,16 @@ public class FloodgateCP extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.saveDefaultConfig();
         instance = this;
+
+        this.saveDefaultConfig();
         getServer().getPluginCommand("floodgatecp").setExecutor(new Commands());
+
         getServer().getPluginManager().registerEvents(new Events(), this);
+
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PluginMessage());
+
         getServer().getConsoleSender().sendMessage("§2FloodgateCP Enabled!");
     }
     @Override
