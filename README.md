@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> Development of this plugin has been abandoned, as all functionality has been [implemented upstream](https://github.com/rockyhawk64/CommandPanels/tree/0a91944/src/me/rockyhawk/commandpanels/floodgatecp).
+
 # FloodgateCP
 FloodgateCP is an indev [Spigot](https://www.spigotmc.org/) plugin that adds Bedrock Edition forms from [Floodgate](https://github.com/GeyserMC/Floodgate) to [CommandPanels](https://www.spigotmc.org/resources/command-panels-custom-guis.67788/).
 
